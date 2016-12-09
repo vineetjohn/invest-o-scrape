@@ -24,7 +24,7 @@ class TermScrapeProcessor(Processor):
 
         log.info("There are " + str(len(list_of_indices)) + " indices")
 
-        f = open(Options.args.output_file_path, 'w')
+        output_file_object = open(Options.args.output_file_path, 'w')
 
         for index_term in list_of_indices:
 
@@ -49,8 +49,8 @@ class TermScrapeProcessor(Processor):
                     break
 
             for term in term_set:
-                print(term, file=f)
+                print(term, file=output_file_object)
 
-        f.close()
+        output_file_object.close()
 
         log.info("Processing complete")
