@@ -2,7 +2,7 @@ import sys
 
 from args.options import Options
 from argparse import ArgumentParser
-from processors.scrape_processor import ScrapeProcessor
+from processors.term_scrape_processor import TermScrapeProcessor
 
 
 def parse_args(argv):
@@ -12,6 +12,7 @@ def parse_args(argv):
     :return:
     """
     parser = ArgumentParser(prog="Investopedia Term Scraper")
+    parser.add_argument('--term_indices_file_path', metavar='Term Indices for Investopedia', type=str)
     parser.add_argument('--output_file_path', metavar='Output File Path', type=str)
 
     Options.args = parser.parse_args(argv, namespace=Options)
@@ -24,7 +25,7 @@ def main(argv):
     :return: null
     """
     parse_args(argv)
-    processor = ScrapeProcessor()
+    processor = TermScrapeProcessor()
     processor.process()
 
 
