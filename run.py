@@ -4,7 +4,7 @@ from args.options import Options
 from argparse import ArgumentParser
 from processors.term_scrape_processor import TermScrapeProcessor
 from processors.content_scrape_processor import ContentScrapeProcessor
-from exceptions.CmdLineException import CmdLineException
+from exceptions.cmdline_exception import CmdLineException
 from utils import log_helper
 
 log = log_helper.get_logger("run")

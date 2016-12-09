@@ -1,4 +1,7 @@
+
 class Options(object):
-    output_file_path = None
+    mode = None
     term_indices_file_path = None
+    term_list_file_path = None
+    output_file_path = None
     args = None
