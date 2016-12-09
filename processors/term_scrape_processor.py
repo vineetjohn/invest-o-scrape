@@ -1,11 +1,8 @@
-import time
-import requests
 import json
-from bs4 import BeautifulSoup
 
-from processors.processor import Processor
 from args.options import Options
-from utils import log_helper
+from processors.processor import Processor
+from utils import log_helper, scrape_helper
 
 log = log_helper.get_logger("TermScrapeProcessor")
 
@@ -41,14 +38,7 @@ class TermScrapeProcessor(Processor):
                 url = self.root_url + index_term + "/?page=" + str(num)
                 log.info("Parsing page at " + url)
 
-                response = requests.get(url, allow_redirects=True)
-                # time.sleep(1)
-
-                soup = BeautifulSoup(response.content, 'lxml')
-                layout_page_content = \
-                    str(BeautifulSoup(str(soup.find(id="Content")), 'lxml').findAll("div", {"class": "layout-page"}))
-
-                links = BeautifulSoup(layout_page_content, 'lxml').findAll("a", {"data-cat": "content_list"})
+                links = scrape_helper.get_term_links_from_page(url)
 
                 for link in links:
                     term_set.add(self.domain + link['href'])
