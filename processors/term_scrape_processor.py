@@ -7,7 +7,7 @@ from processors.processor import Processor
 from args.options import Options
 from utils import log_helper
 
-log = log_helper.get_logger("AmazonReviewProcessor")
+log = log_helper.get_logger("TermScrapeProcessor")
 
 
 class TermScrapeProcessor(Processor):
@@ -31,16 +31,18 @@ class TermScrapeProcessor(Processor):
 
         for index_term in list_of_indices:
 
+            term_set = set()
             log.info("Working on index term " + index_term)
             num = 1
-            term_count = 100
 
-            while term_count >= self.min_term_count:
+            while True:
+                term_set_length = len(term_set)
+
                 url = self.root_url + index_term + "/?page=" + str(num)
                 log.info("Parsing page at " + url)
 
                 response = requests.get(url, allow_redirects=True)
-                time.sleep(1)
+                # time.sleep(1)
 
                 soup = BeautifulSoup(response.content, 'lxml')
                 layout_page_content = \
@@ -48,12 +50,16 @@ class TermScrapeProcessor(Processor):
 
                 links = BeautifulSoup(layout_page_content, 'lxml').findAll("a", {"data-cat": "content_list"})
 
-                term_count = len(links)
                 for link in links:
-                    # log.info(self.domain + link['href'])
-                    print(self.domain + link['href'], file=f)
+                    term_set.add(self.domain + link['href'])
 
                 num += 1
+
+                if term_set_length == len(term_set):
+                    break
+
+            for term in term_set:
+                print(term, file=f)
 
         f.close()
 
