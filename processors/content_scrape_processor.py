@@ -21,8 +21,11 @@ class ContentScrapeProcessor(Processor):
 
         log.info("Reading and processing terms list")
         for line in input_file_reader:
-            term_dict = scrape_helper.get_content_from_termpage(line.strip())
-            print(json.dumps(term_dict), file=output_file_object)
+            try:
+                term_dict = scrape_helper.get_content_from_termpage(line.strip())
+                print(json.dumps(term_dict), file=output_file_object)
+            except Exception as e:
+                log.error("Error while scraping content from url " + line)
 
         output_file_object.close()
 
