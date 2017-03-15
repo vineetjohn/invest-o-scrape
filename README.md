@@ -14,5 +14,5 @@ To run the term extractor, run the below command
 
 To run the term content extractor, run the below command
 ```
-/usr/bin/env bash invest-o-scrape/run_terrun_term_scraper.sh
+/usr/bin/env bash invest-o-scrape/run_term_scraper.sh
 ```
